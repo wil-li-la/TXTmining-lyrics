@@ -10,7 +10,7 @@ def build_tfidf(lyrics: pd.Series, max_features: int = 5000):
 
     Returns (sparse_matrix, feature_names_list, fitted_vectorizer).
     """
-    vectorizer = TfidfVectorizer(max_features=max_features)
+    vectorizer = TfidfVectorizer(max_features=max_features, ngram_range=(1, 2))
     matrix = vectorizer.fit_transform(lyrics)
     vocab = vectorizer.get_feature_names_out().tolist()
     return matrix, vocab, vectorizer

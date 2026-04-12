@@ -10,6 +10,8 @@ STOP_WORDS = set(stopwords.words("english")) | {
     "oh", "ooh", "yeah", "ya", "yea", "hey", "ayy", "uh", "uhh",
     "ah", "ahh", "la", "na", "da", "du", "mm", "mmm", "hmm",
     "whoa", "wo", "woo", "aye", "yo", "huh", "shh",
+    "uhhuh", "uhoh", "nana", "shaha", "bop", "wop",
+    "lalalalalala", "lalalala", "lalala", "dodododo",
     # Contraction leftovers after apostrophe removal
     "im", "ive", "youre", "youve", "youll", "youd",
     "dont", "cant", "wont", "didnt", "doesnt", "isnt", "wasnt",
@@ -55,6 +57,8 @@ def clean_text(text: str) -> str:
     """Lowercase, remove punctuation, remove stopwords and short tokens."""
     text = text.lower()
     text = re.sub(r"[^a-z\s]", "", text)
+    # Remove repeated-syllable nonsense (e.g. "lalalalala", "nananana")
+    text = re.sub(r"\b([a-z]{2,3})\1{2,}\b", "", text)
     tokens = text.split()
     tokens = [t for t in tokens if t not in STOP_WORDS and len(t) > 2]
     return " ".join(tokens)
