@@ -4,7 +4,22 @@ import re
 import pandas as pd
 from nltk.corpus import stopwords
 
-STOP_WORDS = set(stopwords.words("english"))
+# NLTK stopwords + song filler words and contraction fragments
+STOP_WORDS = set(stopwords.words("english")) | {
+    # Interjections / vocal fillers common in lyrics
+    "oh", "ooh", "yeah", "ya", "yea", "hey", "ayy", "uh", "uhh",
+    "ah", "ahh", "la", "na", "da", "du", "mm", "mmm", "hmm",
+    "whoa", "wo", "woo", "aye", "yo", "huh", "shh",
+    # Contraction leftovers after apostrophe removal
+    "im", "ive", "youre", "youve", "youll", "youd",
+    "dont", "cant", "wont", "didnt", "doesnt", "isnt", "wasnt",
+    "werent", "havent", "hasnt", "hadnt", "wouldnt", "couldnt",
+    "shouldnt", "aint", "gonna", "wanna", "gotta", "til",
+    "thats", "hes", "shes", "its", "lets", "theyre", "whos",
+    "ill", "wed", "hed", "shed", "theyd", "theyve", "theyll",
+    # Genius artifacts
+    "contributors", "translations", "lyrics", "read", "more",
+}
 
 
 def strip_genius_header(text: str) -> str:
@@ -37,11 +52,11 @@ def deduplicate_lines(text: str) -> str:
 
 
 def clean_text(text: str) -> str:
-    """Lowercase, remove punctuation, remove stopwords."""
+    """Lowercase, remove punctuation, remove stopwords and short tokens."""
     text = text.lower()
     text = re.sub(r"[^a-z\s]", "", text)
     tokens = text.split()
-    tokens = [t for t in tokens if t not in STOP_WORDS]
+    tokens = [t for t in tokens if t not in STOP_WORDS and len(t) > 2]
     return " ".join(tokens)
 
 
