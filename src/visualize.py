@@ -32,6 +32,9 @@ def generate_decade_wordcloud(
         background_color="white",
         max_words=100,
         colormap="viridis",
+        max_font_size=80,
+        min_font_size=12,
+        relative_scaling=0.3,
     )
     wc.generate_from_frequencies(word_scores)
 
