@@ -16,7 +16,7 @@ python3 -c "import nltk; nltk.download('stopwords')"
 Run each script in order:
 
 ```bash
-python3 src/scraper.py        # Scrape lyrics from AZLyrics (~25 min)
+python3 src/scraper.py        # Scrape lyrics from Genius (~15 min)
 python3 src/preprocess.py     # Clean and deduplicate
 python3 src/features.py       # Build TF-IDF features
 python3 src/visualize.py      # Generate word clouds
@@ -28,8 +28,3 @@ python3 src/classify.py       # Train classifier, produce ROC curves
 - `output/wordclouds/` — word cloud per decade
 - `output/roc_curve.png` — ROC curves for decade classification
 
-## Tests
-
-```bash
-python3 -m pytest tests/ -v
-```
