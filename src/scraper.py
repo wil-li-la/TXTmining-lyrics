@@ -1,5 +1,5 @@
 """
-scraper.py — Fetch lyrics from AZLyrics for a curated Billboard song list.
+scraper.py — Fetch lyrics from Genius for a curated Billboard song list.
 
 Usage:
     python src/scraper.py
@@ -137,23 +137,15 @@ SONGS = [
 # ---------------------------------------------------------------------------
 
 def _make_url(artist: str, title: str) -> str:
-    """Build an AZLyrics URL for a given artist and song title.
+    """Build a Genius URL for a given artist and song title.
 
-    Pattern: https://www.azlyrics.com/lyrics/<artist>/<title>.html
-    - Convert to lowercase
-    - Strip leading "the " from the artist name
-    - Remove all non-alphanumeric characters
+    Pattern: https://genius.com/Artist-name-Song-title-lyrics
     """
-    def _slugify(text: str) -> str:
-        text = text.lower()
-        if text.startswith("the "):
-            text = text[4:]
-        text = re.sub(r"[^a-z0-9]", "", text)
-        return text
-
-    artist_slug = _slugify(artist)
-    title_slug = _slugify(title)
-    return f"https://www.azlyrics.com/lyrics/{artist_slug}/{title_slug}.html"
+    combined = f"{artist} {title}"
+    combined = combined.replace("&", "and")
+    combined = re.sub(r"[^\w\s-]", "", combined)
+    combined = re.sub(r"\s+", "-", combined.strip())
+    return f"https://genius.com/{combined}-lyrics"
 
 
 # ---------------------------------------------------------------------------
@@ -162,7 +154,7 @@ def _make_url(artist: str, title: str) -> str:
 
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/124.0.0.0 Safari/537.36"
     )
@@ -170,7 +162,7 @@ HEADERS = {
 
 
 def fetch_lyrics(artist: str, title: str) -> str | None:
-    """Fetch lyrics for a song from AZLyrics.
+    """Fetch lyrics for a song from Genius.
 
     Returns the lyrics string, or None if fetching/parsing fails.
     """
@@ -184,17 +176,25 @@ def fetch_lyrics(artist: str, title: str) -> str | None:
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # AZLyrics stores lyrics in a <div> with no class or id attribute whose
-    # text content is longer than 200 characters.
-    for div in soup.find_all("div"):
-        if div.get("class") or div.get("id"):
-            continue
-        text = div.get_text(separator="\n").strip()
-        if len(text) > 200:
-            return text
+    # Genius stores lyrics in <div data-lyrics-container="true"> elements.
+    containers = soup.find_all("div", attrs={"data-lyrics-container": "true"})
+    if not containers:
+        print(f"    [WARN] Lyrics not found for {artist} - {title} ({url})")
+        return None
 
-    print(f"    [WARN] Lyrics div not found for {artist} - {title} ({url})")
-    return None
+    lines = []
+    for container in containers:
+        for br in container.find_all("br"):
+            br.replace_with("\n")
+        lines.append(container.get_text())
+
+    text = "\n".join(lines).strip()
+    # Remove section headers like [Verse 1], [Chorus], etc.
+    text = re.sub(r"\[.*?\]", "", text)
+    # Collapse multiple blank lines
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+
+    return text if len(text) > 100 else None
 
 
 # ---------------------------------------------------------------------------
@@ -239,7 +239,7 @@ def main() -> None:
 
             # Polite delay between requests (skip after the last song)
             if i < total:
-                delay = random.uniform(10, 20)
+                delay = random.uniform(5, 10)
                 print(f"    Waiting {delay:.1f}s …")
                 time.sleep(delay)
 
