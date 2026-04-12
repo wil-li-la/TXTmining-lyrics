@@ -12,6 +12,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
+
 def train_and_evaluate(X, y, output_path: str | None = "output/roc_curve.png"):
     """Train Logistic Regression and produce ROC curves.
 
