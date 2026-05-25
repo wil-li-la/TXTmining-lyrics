@@ -1,4 +1,5 @@
 """Streamlit UI: Recommend (taste profiler) + Analyze (decade/genre style report)."""
+import hmac
 import os
 from pathlib import Path
 
@@ -6,11 +7,39 @@ import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 
-from src.agent.ranking import load_stats, rank
-from src.agent.runner import run
-
 load_dotenv()
 st.set_page_config(page_title="Pop Lyrics Taste Profiler", layout="wide")
+
+
+# ----------------------------------------------------------------------
+# Password gate (protects OpenAI quota when deployed publicly).
+# If APP_PASSWORD env var is unset, the gate is disabled (local dev).
+# ----------------------------------------------------------------------
+def _password_gate() -> None:
+    expected = os.environ.get("APP_PASSWORD")
+    if not expected:
+        return  # gate disabled
+    if st.session_state.get("auth_ok"):
+        return
+
+    st.markdown("## 🔒 Pop Lyrics Taste Profiler")
+    st.caption("This demo is restricted to authorized viewers (password-gated to protect API quota).")
+    pw = st.text_input("Password", type="password", key="_pw_input")
+    if pw:
+        if hmac.compare_digest(pw, expected):
+            st.session_state.auth_ok = True
+            st.rerun()
+        else:
+            st.error("Incorrect password.")
+    st.stop()
+
+
+_password_gate()
+
+# Imports the agent (which initializes OpenAI client) happen AFTER the gate
+# so unauthenticated visitors don't trigger client construction.
+from src.agent.ranking import load_stats, rank
+from src.agent.runner import run
 
 # Slider config — each entry: (label, range_lo, range_hi, help_text_with_examples)
 SLIDERS: dict[str, tuple[str, float, float, str]] = {
