@@ -1,12 +1,10 @@
 """Tools the OpenAI agent can call: search, fetch lyrics, extract features."""
 import os
-import re
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 from dotenv import load_dotenv
-from ddgs import DDGS
 import lyricsgenius
 
 from src.preprocess_v2 import make_views
@@ -15,35 +13,6 @@ from src.features import rhyme, repetition, emotion, concreteness, pronouns, emb
 load_dotenv()
 _FEATURE_MODS = [rhyme, repetition, emotion, concreteness, pronouns, embedding]
 _CACHE_PATH = "data/agent_cache.csv"
-_TITLE_ARTIST = re.compile(r"^\s*([^-|]+?)\s*[-–]\s*([^|]+?)\s*[|]?\s*", flags=re.UNICODE)
-
-
-def _parse_title(text: str) -> dict[str, str] | None:
-    """Extract (artist, title) from a search-result title like 'Olivia Rodrigo - drivers license | Billboard'."""
-    m = _TITLE_ARTIST.match(text)
-    if not m:
-        return None
-    artist = m.group(1).strip()
-    title = m.group(2).strip()
-    if len(artist) > 60 or len(title) > 60:
-        return None
-    return {"artist": artist, "title": title}
-
-
-def search_recent_songs(query: str, max_results: int = 8) -> list[dict[str, str]]:
-    """Web search; return parsed (artist, title) pairs."""
-    rows: list[dict[str, str]] = []
-    try:
-        with DDGS() as ddgs:
-            for r in ddgs.text(query, max_results=max_results * 2):
-                parsed = _parse_title(r.get("title", ""))
-                if parsed:
-                    rows.append(parsed)
-                if len(rows) >= max_results:
-                    break
-    except Exception as e:
-        print(f"  [search_recent_songs ERROR] {e}")
-    return rows
 
 
 _genius: lyricsgenius.Genius | None = None
@@ -54,10 +23,32 @@ def _get_genius() -> lyricsgenius.Genius:
     if _genius is None:
         _genius = lyricsgenius.Genius(
             os.environ["GENIUS_ACCESS_TOKEN"],
-            timeout=15, sleep_time=1, verbose=False,
+            timeout=15, sleep_time=1,
             remove_section_headers=True,
         )
+        _genius.verbose = False
     return _genius
+
+
+def search_recent_songs(query: str, max_results: int = 8) -> list[dict[str, str]]:
+    """Search Genius for songs matching the query. Returns structured {artist, title, year?} hits.
+
+    Uses the official Genius search endpoint via LyricsGenius — far more reliable for
+    music discovery than free-text web search (which surfaces blog roundups).
+    """
+    rows: list[dict[str, str]] = []
+    try:
+        genius = _get_genius()
+        resp = genius.search_songs(query, per_page=max_results)
+        for hit in resp.get("hits", [])[:max_results]:
+            res = hit.get("result", {})
+            artist = (res.get("primary_artist") or {}).get("name", "").strip()
+            title = res.get("title", "").strip()
+            if artist and title:
+                rows.append({"artist": artist, "title": title})
+    except Exception as e:
+        print(f"  [search_recent_songs ERROR] {e}")
+    return rows
 
 
 def fetch_lyrics(artist: str, title: str) -> str | None:
@@ -98,11 +89,11 @@ TOOL_SCHEMAS = [
         "type": "function",
         "function": {
             "name": "search_recent_songs",
-            "description": "Search the web for recent songs matching a query. Returns a list of {artist, title}.",
+            "description": "Search Genius's music catalog for songs. Returns structured {artist, title} hits. For recent music, use specific recent artist names (e.g., 'Sabrina Carpenter 2024', 'Olivia Rodrigo', 'Billie Eilish 2024') rather than vague queries like 'best 2024 songs' (which produces garbage).",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "query": {"type": "string", "description": "Search query, e.g. 'Billboard Hot 100 2025 emotional ballads'"},
+                    "query": {"type": "string", "description": "Search query — works best with specific recent artist names, e.g. 'Sabrina Carpenter 2024' or 'Taylor Swift Fortnight'."},
                     "max_results": {"type": "integer", "default": 8},
                 },
                 "required": ["query"],

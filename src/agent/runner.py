@@ -9,18 +9,19 @@ from src.agent.tools import TOOL_REGISTRY, TOOL_SCHEMAS
 
 load_dotenv()
 
-SYSTEM_PROMPT = """You are a music recommendation agent. Given a user's lyrical taste profile (z-scored sliders over features like emotion intensity, repetition, concreteness, rhyme density, valence, and self-focus), your job is to find 3-5 RECENT (post-2023) songs that match.
+SYSTEM_PROMPT = """You are a music recommendation agent. Given a user's lyrical taste profile (z-scored sliders over features like emotion intensity, repetition, concreteness, rhyme density, valence, and self-focus), your job is to find 3-5 RECENT (2023-2025) songs that match.
 
 Workflow:
-1. Call search_recent_songs with 1-2 well-chosen queries (e.g., 'Billboard Hot 100 2025 emotional ballad').
+1. Call search_recent_songs with queries based on RECENT POPULAR ARTISTS you know — e.g., 'Sabrina Carpenter', 'Olivia Rodrigo', 'Taylor Swift 2024', 'Billie Eilish', 'Doja Cat', 'Chappell Roan', 'Tate McRae', 'Benson Boone'. Do NOT use vague chart queries like 'best 2024 songs' — they return garbage.
 2. For each candidate the search returns, call fetch_lyrics(artist, title) to get the lyrics.
 3. For each fetched lyrics, call extract_features(lyrics) to get its feature vector.
-4. After gathering 5-8 scored candidates, return a final message explaining your top picks.
+4. After scoring at least 5 candidates, return a final message explaining your top picks.
 
-Tips:
-- Vary your search queries to surface different candidates if the first batch is thin.
-- If a fetch fails, skip and move on.
-- Do not invent songs. Only recommend ones whose lyrics you actually retrieved."""
+Rules:
+- Only call extract_features on lyrics that fetch_lyrics actually returned. Never invent lyrics.
+- If a fetch returns nothing, skip and try a different song/artist.
+- Mix your searches: 2-3 different artists, 1-2 songs each. That gives ~4-6 candidates total.
+- After 4-5 candidates are scored, write the final summary — don't keep searching forever."""
 
 
 def run(user_profile_text: str, candidate_sink: list[dict] | None = None,
@@ -40,8 +41,8 @@ def run(user_profile_text: str, candidate_sink: list[dict] | None = None,
     ]
     log = trace_sink or (lambda s: print(s))
 
-    last_search_candidates: list[dict] = []
-    last_fetched_title: str | None = None
+    # Map lyrics-string-prefix -> (artist, title) so extract_features calls can be attributed
+    lyrics_to_meta: dict[str, tuple[str, str]] = {}
 
     for step in range(max_steps):
         resp = client.chat.completions.create(
@@ -62,16 +63,14 @@ def run(user_profile_text: str, candidate_sink: list[dict] | None = None,
                 result = {"error": str(e)}
                 log(f"  ERROR: {e}")
             if name == "search_recent_songs" and isinstance(result, list):
-                last_search_candidates = result
                 log(f"  -> {len(result)} candidates")
             elif name == "fetch_lyrics" and isinstance(result, str):
-                last_fetched_title = args.get("title")
-                log(f"  -> {len(result)} chars")
+                key = result[:80]
+                lyrics_to_meta[key] = (args.get("artist", "?"), args.get("title", "?"))
+                log(f"  -> {len(result)} chars [{args.get('artist','?')} - {args.get('title','?')}]")
             elif name == "extract_features" and isinstance(result, dict) and candidate_sink is not None:
-                title = last_fetched_title or "?"
-                artist = next(
-                    (c["artist"] for c in last_search_candidates if c["title"] == title), "?"
-                )
+                lyrics_arg = args.get("lyrics", "")
+                artist, title = lyrics_to_meta.get(lyrics_arg[:80], ("?", "?"))
                 candidate_sink.append({"artist": artist, "title": title, "features": result})
                 log(f"  -> features for {artist} - {title}")
             messages.append({
