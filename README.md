@@ -3,9 +3,8 @@ title: Pop Lyrics Taste Profiler
 emoji: 🎵
 colorFrom: blue
 colorTo: purple
-sdk: streamlit
-sdk_version: 1.57.0
-app_file: app.py
+sdk: docker
+app_port: 7860
 pinned: false
 short_description: Set your taste profile; agent finds recent matching songs.
 ---
