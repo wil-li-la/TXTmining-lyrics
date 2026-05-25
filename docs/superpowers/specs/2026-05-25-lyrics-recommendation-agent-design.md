@@ -57,7 +57,7 @@ Key design points:
 |---|---|---|---|
 | walkerkq/musiclyrics | Billboard Year-End Hot 100, 1965–2015 | ~5,100 | Download CSV directly from GitHub |
 | Existing scrape | Billboard Hot 100, 2020–2025 | ~95 | Keep |
-| New scrape | Billboard Hot 100, 2016–2019 + 2025 fill | ~500 | Reuse `src/scraper.py` with LyricsGenius |
+| New scrape | Billboard Hot 100, 2016–2019 + 2025 fill | ~500 | Rewrite scraper to use **LyricsGenius** (current `src/scraper.py` does raw HTML URL-guessing — fragile and lacks a search endpoint) |
 | **Total** | 1965–2025 | **~5,700** | |
 
 ### Schema (`data/lyrics_full.csv`)
@@ -270,7 +270,8 @@ while True:
 
 ### 6.8 Environment
 
-`OPENAI_API_KEY` and `GENIUS_ACCESS_TOKEN` (already used by current scraper).
+- `OPENAI_API_KEY` — standard OpenAI API key.
+- `GENIUS_ACCESS_TOKEN` — **client access token** for LyricsGenius. This is *not* the same as `client_id` / `client_secret` (those are for the OAuth authorization-code flow, which we don't need). To obtain: log in to <https://genius.com/api-clients>, find the existing API client, click "Generate Access Token", paste the resulting single string into `.env`. The current `.env` has `client_id` and `client_secret` only — these can stay (unused) but the access token must be added.
 
 ## 7. Citations & report rewrite
 
