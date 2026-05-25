@@ -10,10 +10,9 @@ def extract(views: dict) -> dict[str, float]:
     if not text.strip():
         return {k: 0.0 for k in EMOTION_KEYS}
 
-    nrc = NRCLex(text)
-    # NRCLex 4.x no longer auto-populates in __init__; call load_raw_text explicitly.
-    if not getattr(nrc, "affect_dict", None):
-        nrc.load_raw_text(text)
+    # NRCLex 4.x __init__ treats its arg as a file path; construct empty and load raw text.
+    nrc = NRCLex()
+    nrc.load_raw_text(text)
     freqs = nrc.affect_frequencies
     out = {f"emo_{e}": float(freqs.get(e, 0.0)) for e in EMOTIONS}
 
