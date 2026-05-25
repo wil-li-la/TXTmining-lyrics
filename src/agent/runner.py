@@ -41,9 +41,6 @@ def run(user_profile_text: str, candidate_sink: list[dict] | None = None,
     ]
     log = trace_sink or (lambda s: print(s))
 
-    # Map lyrics-string-prefix -> (artist, title) so extract_features calls can be attributed
-    lyrics_to_meta: dict[str, tuple[str, str]] = {}
-
     for step in range(max_steps):
         resp = client.chat.completions.create(
             model=model, messages=messages, tools=TOOL_SCHEMAS,
@@ -65,12 +62,10 @@ def run(user_profile_text: str, candidate_sink: list[dict] | None = None,
             if name == "search_recent_songs" and isinstance(result, list):
                 log(f"  -> {len(result)} candidates")
             elif name == "fetch_lyrics" and isinstance(result, str):
-                key = result[:80]
-                lyrics_to_meta[key] = (args.get("artist", "?"), args.get("title", "?"))
                 log(f"  -> {len(result)} chars [{args.get('artist','?')} - {args.get('title','?')}]")
-            elif name == "extract_features" and isinstance(result, dict) and candidate_sink is not None:
-                lyrics_arg = args.get("lyrics", "")
-                artist, title = lyrics_to_meta.get(lyrics_arg[:80], ("?", "?"))
+            elif name == "extract_features" and isinstance(result, dict) and "error" not in result and candidate_sink is not None:
+                artist = result.pop("_artist", args.get("artist", "?"))
+                title = result.pop("_title", args.get("title", "?"))
                 candidate_sink.append({"artist": artist, "title": title, "features": result})
                 log(f"  -> features for {artist} - {title}")
             messages.append({

@@ -59,17 +59,19 @@ def main() -> None:
         button = page.get_by_role("button", name="Find matching recent songs")
         button.click()
         # Wait briefly for trace to start
-        time.sleep(5)
+        time.sleep(8)
         shot(page, "03_searching")
 
-        # 4. Wait a bit longer for some candidates to be scored
-        time.sleep(20)
+        # 4. Wait for the agent to make several tool calls (visible in trace)
+        time.sleep(35)
         shot(page, "04_scoring")
 
-        # 5. Wait for the agent to finish (look for "Top recommendations" heading or spinner gone)
+        # 5. Wait for the agent to finish — give it generous time
         try:
-            page.wait_for_selector("text=Top recommendations", timeout=120_000)
-            time.sleep(2)
+            page.wait_for_selector("text=Top recommendations", timeout=240_000)
+            # Scroll down so the ranked list is in frame
+            page.locator("text=Top recommendations").scroll_into_view_if_needed()
+            time.sleep(3)
         except Exception as e:
             print(f"  warn: Top recommendations not reached: {e}")
         shot(page, "05_ranked")

@@ -75,10 +75,18 @@ def fetch_lyrics(artist: str, title: str) -> str | None:
     return lyrics
 
 
-def extract_features(lyrics: str) -> dict[str, Any]:
-    """Run all feature modules on raw lyrics."""
+def extract_features(artist: str, title: str) -> dict[str, Any]:
+    """Run all feature modules on the cached lyrics for (artist, title).
+
+    Takes (artist, title) rather than raw lyrics so the agent doesn't have to
+    pass long lyric strings back through tool args (avoids attribution bugs
+    when the LLM trims or reformats the string).
+    """
+    lyrics = fetch_lyrics(artist, title)  # uses cache if already fetched
+    if not lyrics:
+        return {"error": f"no cached lyrics for {artist} - {title}"}
     views = make_views(lyrics)
-    out: dict[str, Any] = {}
+    out: dict[str, Any] = {"_artist": artist, "_title": title}
     for mod in _FEATURE_MODS:
         out.update(mod.extract(views))
     return out
@@ -119,13 +127,14 @@ TOOL_SCHEMAS = [
         "type": "function",
         "function": {
             "name": "extract_features",
-            "description": "Compute the full feature vector (rhyme, repetition, emotion, concreteness, pronouns, embedding) for given lyrics.",
+            "description": "Compute the full feature vector (rhyme, repetition, emotion, concreteness, pronouns, embedding) for a song. Must be called AFTER fetch_lyrics for the same (artist, title) — looks up cached lyrics.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "lyrics": {"type": "string"},
+                    "artist": {"type": "string"},
+                    "title": {"type": "string"},
                 },
-                "required": ["lyrics"],
+                "required": ["artist", "title"],
             },
         },
     },
