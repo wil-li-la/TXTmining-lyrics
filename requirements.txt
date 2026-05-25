@@ -10,6 +10,7 @@ requests>=2.31
 beautifulsoup4>=4.12
 musicbrainzngs>=0.7.1
 langdetect>=1.0.9
+openpyxl>=3.1  # to parse Brysbaert xlsx fallback in src/data_sources.py
 
 # NLP / features
 nltk>=3.8
