@@ -33,3 +33,7 @@ python-dotenv>=1.0
 
 # Test
 pytest>=8.0
+
+# PDF report rendering
+weasyprint>=60
+markdown>=3.5
