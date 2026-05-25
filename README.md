@@ -1,30 +1,54 @@
-# Billboard Pop Lyrics Text Mining
+---
+title: Pop Lyrics Taste Profiler
+emoji: 🎵
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+sdk_version: 1.57.0
+app_file: app.py
+pinned: false
+short_description: Set your taste profile; agent finds recent matching songs.
+---
 
-Analyzing lyrical changes in Billboard top 100 pop songs across four decades (1990s–2020s) using TF-IDF and classification.
+# Pop Lyrics Taste Profiler
 
-## Setup
+A Streamlit app that lets you set a lyrical taste profile (6 sliders over emotion, repetition, concreteness, rhyme density, self-focus) and have an OpenAI-powered agent find recent Billboard songs that match — by live-fetching lyrics from Genius, scoring them on the same feature vector, and ranking by cosine similarity to your profile.
+
+Built on a 4,869-song corpus spanning 1965–2025 (Billboard Year-End Hot 100 via `walkerkq/musiclyrics` + a 2016–2025 supplemental scrape).
+
+## Two tabs
+
+- **🎧 Recommend** — adjust sliders, click _Find matching recent songs_, watch the agent search Genius, fetch lyrics, extract features, and rank.
+- **📊 Analyze** — per-decade style profiles, cross-decade heatmap, year-by-year trend plots, and the classifier result (38% accuracy, no artist leakage).
+
+## Required secrets (set in Space settings)
+
+| Name | Get it from |
+|---|---|
+| `OPENAI_API_KEY` | https://platform.openai.com/api-keys (used for the agent's tool-use loop with `gpt-4o-mini`) |
+| `GENIUS_ACCESS_TOKEN` | https://genius.com/api-clients — click **Generate Access Token** on your client (this is NOT the same as `client_id` / `client_secret`) |
+
+## Local development
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-python3 -c "import nltk; nltk.download('stopwords')"
+python3 -c "import nltk; nltk.download('stopwords'); nltk.download('cmudict')"
+cp .env.example .env  # then fill in OPENAI_API_KEY and GENIUS_ACCESS_TOKEN
+streamlit run app.py
 ```
 
-## Pipeline
-
-Run each script in order:
+## Re-running the offline pipeline (optional)
 
 ```bash
-python3 src/scraper.py        # Scrape lyrics from Genius (~15 min)
-python3 src/preprocess.py     # Clean and deduplicate
-python3 src/features.py       # Build TF-IDF features
-python3 src/visualize.py      # Generate word clouds
-python3 src/classify.py       # Train classifier, produce ROC curves
+python3 src/data_sources.py             # downloads walkerkq + Brysbaert
+python3 src/scraper_v2.py               # 2016–2025 Genius scrape (~10 min)
+python3 src/genre_tagger.py             # genre labels via OpenAI batch (~5 min)
+python3 -m src.features.build_all       # 7 feature modules over all songs (~5 min)
+python3 -m src.analyze                  # CV + ROC
+python3 -m src.trends                   # 22 per-feature trend plots
 ```
 
-## Output
+## Architecture & methodology
 
-- `output/wordclouds/` — word cloud per decade
-- `output/roc_curve.png` — ROC curves for decade classification
-
+See `docs/superpowers/specs/2026-05-25-lyrics-recommendation-agent-design.md` for the full design spec, and `report.md` for the analysis writeup.
