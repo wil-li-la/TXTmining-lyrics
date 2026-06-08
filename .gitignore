@@ -8,6 +8,9 @@ venv/
 # Visual-companion brainstorm artifacts
 .superpowers/
 
+# Verification screenshot tour (large, regenerable via run-app skill)
+output/screenshots/comprehensive/
+
 # Old, unused artifacts from initial pipeline
 data/tfidf_matrix.pkl
 data/tfidf_vocab.pkl

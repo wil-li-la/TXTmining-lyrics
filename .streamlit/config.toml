@@ -1,0 +1,20 @@
+# Brutalist "Swiss Industrial Print" base theme (taste-skill: industrial-brutalist-ui).
+# Structure (colors, square corners, ink borders) lives here so Streamlit's own chrome
+# matches even before the injected CSS in src/theme.py loads. Fonts are NAMED here and
+# actually loaded via @import in inject_css() (Google Fonts CSS can't be used as
+# theme.fontFaces, which needs raw woff2 URLs).
+[theme]
+base = "light"
+primaryColor = "#E9FF3A"              # acid yellow — slider fill, primary button, focus
+backgroundColor = "#F4F4F0"           # documentation paper
+secondaryBackgroundColor = "#ECEAE2"  # sidebar + secondary surfaces (slightly darker paper)
+textColor = "#111111"                 # carbon ink
+borderColor = "#111111"               # hard ink hairlines
+showWidgetBorder = true               # visible compartmentalization
+baseRadius = "none"                   # 90-degree corners everywhere
+font = "Archivo, sans-serif"
+headingFont = "Archivo, sans-serif"
+codeFont = "'JetBrains Mono', monospace"
+# Built-in charts (st.bar_chart) adopt these so they match the palette:
+# ink first (single-series bars), then acid yellow (second series), then neutrals.
+chartCategoricalColors = ["#111111", "#E9FF3A", "#9A9A90", "#E61919", "#2C50FF"]

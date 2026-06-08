@@ -10,6 +10,12 @@ from dotenv import load_dotenv
 load_dotenv()
 st.set_page_config(page_title="Pop Lyrics Taste Profiler", layout="wide")
 
+# Brutalist "Swiss Industrial Print" theme (taste-skill: industrial-brutalist-ui).
+# Inject before the gate so the password screen is styled too. Presentation only.
+from src.theme import eyebrow, hero, inject_css, result_header
+
+inject_css()
+
 
 # ----------------------------------------------------------------------
 # Password gate (protects OpenAI quota when deployed publicly).
@@ -22,7 +28,8 @@ def _password_gate() -> None:
     if st.session_state.get("auth_ok"):
         return
 
-    st.markdown("## 🔒 Pop Lyrics Taste Profiler")
+    eyebrow("Restricted Access")
+    st.markdown("## Pop Lyrics Taste Profiler")
     st.caption("This demo is restricted to authorized viewers (password-gated to protect API quota).")
     pw = st.text_input("Password", type="password", key="_pw_input")
     if pw:
@@ -139,9 +146,10 @@ except Exception:
     stats = None
 data_loaded = feat is not None and stats is not None
 
-st.title("🎵 Pop Lyrics Taste Profiler")
+hero()
 
 with st.sidebar:
+    eyebrow("Corpus")
     st.header("Corpus overview")
     if data_loaded:
         st.metric("Songs", f"{len(feat):,}")
@@ -153,7 +161,7 @@ with st.sidebar:
     else:
         st.warning("Pipeline data not loaded. Run the offline pipeline (see README).")
 
-tab_rec, tab_analyze = st.tabs(["🎧 Recommend", "📊 Analyze"])
+tab_rec, tab_analyze = st.tabs(["[ Recommend ]", "[ Analyze ]"])
 
 
 # ----------------------------------------------------------------------
@@ -169,7 +177,7 @@ with tab_rec:
         with cols[i % 2]:
             profile[key] = st.slider(label, lo, hi, 0.0, 0.1, key=f"slider_{key}", help=help_text)
 
-    go = st.button("Find matching recent songs", type="primary", disabled=not data_loaded)
+    go = st.button("Find matching recent songs ▸", type="primary", disabled=not data_loaded)
 
     if go and data_loaded:
         profile_text = "\n".join(
@@ -197,8 +205,8 @@ with tab_rec:
         else:
             ranked = rank(candidates, profile, stats)[:5]
             for i, c in enumerate(ranked, 1):
-                with st.container():
-                    st.markdown(f"**{i}. {c['artist']} — {c['title']}**  (similarity {c['score']:.2f})")
+                with st.container(border=True):
+                    result_header(i, c["artist"], c["title"], c["score"])
                     feature_keys = list(SLIDERS.keys())
                     comparison = pd.DataFrame({
                         "feature": feature_keys,

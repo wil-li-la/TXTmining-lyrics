@@ -1,8 +1,8 @@
 ---
 title: Pop Lyrics Taste Profiler
 emoji: 🎵
-colorFrom: blue
-colorTo: purple
+colorFrom: gray
+colorTo: yellow
 sdk: docker
 app_port: 7860
 pinned: false
