@@ -96,6 +96,9 @@ h1, h2, h3, h4,
 /* ---- tabs: uppercase mono, yellow active underline ---- */
 button[data-baseweb="tab"] { font-family: 'JetBrains Mono', monospace !important;
   text-transform: uppercase; letter-spacing: .08em; font-weight: 700 !important; }
+/* active tab text defaults to the yellow primary (invisible on paper) — force ink. */
+button[data-baseweb="tab"], button[data-baseweb="tab"][aria-selected="true"],
+button[data-baseweb="tab"][aria-selected="true"] * { color: #111 !important; }
 [data-baseweb="tab-highlight"] { background-color: #E9FF3A !important; height: 4px !important; }
 [data-baseweb="tab-border"] { background-color: #111 !important; }
 
@@ -112,9 +115,12 @@ button[data-baseweb="tab"] { font-family: 'JetBrains Mono', monospace !important
 .stButton > button:active { transform: translate(4px, 4px);
   box-shadow: 0 0 0 #111 !important; }
 
-/* ---- sliders: square thumb, ink outline ---- */
+/* ---- sliders: square thumb, ink outline; ink value labels (default yellow = invisible) ---- */
 [data-testid="stSlider"] div[role="slider"] {
   border-radius: 0 !important; border: 2px solid #111 !important; }
+[data-testid="stSlider"] [data-testid="stThumbValue"],
+[data-testid="stThumbValue"], [data-testid="stSliderThumbValue"] {
+  color: #111 !important; font-family: 'JetBrains Mono', monospace !important; }
 
 /* ---- dataframe / heatmap: hard frame, mono numerals ---- */
 [data-testid="stDataFrame"] { border: 2px solid #111 !important; }
