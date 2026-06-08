@@ -3,7 +3,7 @@
 MusicBrainz was found empirically to return no tags for ~all songs in this
 corpus (older 1965-2015 walkerkq entries don't have rich tags). So this
 version skips MusicBrainz and batches OpenAI calls (20 songs per request)
-for speed: ~250 calls * 1.5s = ~6 min for 4,869 songs.
+for speed: ~260 calls * 1.5s = ~6 min for 5,205 songs.
 """
 import json
 import os

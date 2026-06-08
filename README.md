@@ -13,12 +13,12 @@ short_description: Set your taste profile; agent finds recent matching songs.
 
 A Streamlit app that lets you set a lyrical taste profile (6 sliders over emotion, repetition, concreteness, rhyme density, self-focus) and have an OpenAI-powered agent find recent Billboard songs that match — by live-fetching lyrics from Genius, scoring them on the same feature vector, and ranking by cosine similarity to your profile.
 
-Built on a 4,869-song corpus spanning 1965–2025 (Billboard Year-End Hot 100 via `walkerkq/musiclyrics` + a 2016–2025 supplemental scrape).
+Built on a 5,205-song corpus spanning 1965–2025 (Billboard Year-End Hot 100 via `walkerkq/musiclyrics` + a 2016–2025 supplemental fetch, lrclib-first with a Genius fallback).
 
 ## Two tabs
 
 - **🎧 Recommend** — adjust sliders, click _Find matching recent songs_, watch the agent search Genius, fetch lyrics, extract features, and rank.
-- **📊 Analyze** — per-decade style profiles, cross-decade heatmap, year-by-year trend plots, and the classifier result (38% accuracy, no artist leakage).
+- **📊 Analyze** — per-decade style profiles, cross-decade heatmap, year-by-year trend plots, and the classifier result (41% accuracy, no artist leakage).
 
 ## Required secrets (set in Space settings)
 

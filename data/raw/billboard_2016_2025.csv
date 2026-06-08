@@ -1,0 +1,631 @@
+artist,title,year,peak
+Justin Bieber,Love Yourself,2016,1
+Drake,One Dance,2016,2
+Rihanna,Work,2016,3
+Justin Bieber,Sorry,2016,4
+The Chainsmokers,Don't Let Me Down,2016,5
+Desiigner,Panda,2016,6
+Lukas Graham,7 Years,2016,7
+Sia,Cheap Thrills,2016,8
+Fifth Harmony,Work from Home,2016,9
+Calvin Harris,This Is What You Came For,2016,10
+Mike Posner,I Took a Pill in Ibiza,2016,11
+The Chainsmokers,Closer,2016,12
+Twenty One Pilots,Stressed Out,2016,13
+Twenty One Pilots,Heathens,2016,14
+Adele,Hello,2016,15
+Flo Rida,My House,2016,16
+DJ Snake,Let Me Love You,2016,17
+Zayn,Pillowtalk,2016,18
+Meghan Trainor,Me Too,2016,19
+Charlie Puth,One Call Away,2016,20
+Selena Gomez,Hands to Myself,2016,21
+Drake,Hotline Bling,2016,22
+Beyonce,Formation,2016,23
+Bruno Mars,24K Magic,2016,24
+Justin Timberlake,Can't Stop the Feeling,2016,25
+Ed Sheeran,Shape of You,2017,1
+Luis Fonsi,Despacito,2017,2
+Bruno Mars,That's What I Like,2017,3
+The Chainsmokers,Something Just Like This,2017,4
+DJ Khaled,I'm the One,2017,5
+Migos,Bad and Boujee,2017,6
+Kendrick Lamar,HUMBLE.,2017,7
+Post Malone,Congratulations,2017,8
+Sam Hunt,Body Like a Back Road,2017,9
+Imagine Dragons,Believer,2017,10
+Charlie Puth,Attention,2017,11
+Camila Cabello,Havana,2017,12
+Taylor Swift,Look What You Made Me Do,2017,13
+Future,Mask Off,2017,14
+Ed Sheeran,Perfect,2017,15
+Khalid,Location,2017,16
+Cardi B,Bodak Yellow,2017,17
+French Montana,Unforgettable,2017,18
+Maroon 5,What Lovers Do,2017,19
+Logic,1-800-273-8255,2017,20
+Post Malone,Rockstar,2017,21
+Selena Gomez,It Ain't Me,2017,22
+Lil Uzi Vert,XO Tour Llif3,2017,23
+DJ Khaled,Wild Thoughts,2017,24
+Zedd,Stay,2017,25
+Drake,God's Plan,2018,1
+Post Malone,Psycho,2018,2
+Post Malone,Better Now,2018,3
+Cardi B,I Like It,2018,4
+Bruno Mars,Finesse,2018,5
+Drake,Nice for What,2018,6
+Camila Cabello,Never Be the Same,2018,7
+Ariana Grande,No Tears Left to Cry,2018,8
+Maroon 5,Girls Like You,2018,9
+Childish Gambino,This Is America,2018,10
+Drake,In My Feelings,2018,11
+Travis Scott,Sicko Mode,2018,12
+XXXTentacion,SAD!,2018,13
+Bebe Rexha,Meant to Be,2018,14
+Marshmello,Happier,2018,15
+Lady Gaga,Shallow,2018,16
+5 Seconds of Summer,Youngblood,2018,17
+Post Malone,Sunflower,2018,18
+Ariana Grande,"Thank U, Next",2018,19
+Imagine Dragons,Natural,2018,20
+Tyga,Taste,2018,21
+Halsey,Without Me,2018,22
+Juice WRLD,Lucid Dreams,2018,23
+Ella Mai,Boo'd Up,2018,24
+Khalid,Love Lies,2018,25
+Lil Nas X,Old Town Road,2019,1
+Billie Eilish,Bad Guy,2019,2
+Post Malone,Sunflower,2019,3
+Halsey,Without Me,2019,4
+Shawn Mendes,Senorita,2019,5
+Lil Tecca,Ran$om,2019,6
+Khalid,Talk,2019,7
+Lewis Capaldi,Someone You Loved,2019,8
+Jonas Brothers,Sucker,2019,9
+Ariana Grande,7 Rings,2019,10
+Post Malone,Wow.,2019,11
+Ed Sheeran,I Don't Care,2019,12
+Sam Smith,Dancing with a Stranger,2019,13
+Taylor Swift,ME!,2019,14
+Ava Max,Sweet but Psycho,2019,15
+Lizzo,Truth Hurts,2019,16
+Travis Scott,Highest in the Room,2019,17
+Marshmello,Wow,2019,18
+Maroon 5,Memories,2019,19
+Billie Eilish,When the Party's Over,2019,20
+Cardi B,Please Me,2019,21
+DaBaby,Suge,2019,22
+Lil Nas X,Panini,2019,23
+Lauv,I Like Me Better,2019,24
+Y2K,Lalala,2019,25
+The Weeknd,Blinding Lights,2020,1
+Post Malone,Circles,2020,2
+Roddy Ricch,The Box,2020,3
+Dua Lipa,Don't Start Now,2020,4
+DaBaby,Rockstar,2020,5
+Harry Styles,Adore You,2020,6
+Future,Life Is Good,2020,7
+Maroon 5,Memories,2020,8
+Maren Morris,The Bones,2020,9
+Lewis Capaldi,Someone You Loved,2020,10
+Megan Thee Stallion,Savage,2020,11
+Trevor Daniel,Falling,2020,12
+Harry Styles,Watermelon Sugar,2020,13
+Justin Bieber,Intentions,2020,14
+Mustard,Ballin',2020,15
+Doja Cat,Say So,2020,16
+Jack Harlow,Whats Poppin,2020,17
+Surfaces,Sunday Best,2020,18
+SAINt JHN,Roses,2020,19
+Drake,Toosie Slide,2020,20
+Lewis Capaldi,Before You Go,2020,21
+Tones and I,Dance Monkey,2020,22
+Arizona Zervas,Roxanne,2020,23
+Justin Bieber,Yummy,2020,24
+Lady Gaga,Rain on Me,2020,25
+Powfu,Death Bed,2020,26
+Billie Eilish,Everything I Wanted,2020,27
+The Weeknd,Heartless,2020,28
+Blackbear,Hot Girl Bummer,2020,29
+Selena Gomez,Lose You to Love Me,2020,30
+Cardi B,WAP,2020,31
+24kGoldn,Mood,2020,32
+Kane Brown,Be Like That,2020,33
+Luke Combs,Lovin' on You,2020,34
+Jawsh 685,Savage Love,2020,35
+BTS,Dynamite,2020,36
+Justin Bieber,Holy,2020,37
+Drake,Laugh Now Cry Later,2020,38
+Chris Brown,Go Crazy,2020,39
+Dua Lipa,Break My Heart,2020,40
+Pop Smoke,What You Know Bout Love,2020,41
+Gabby Barrett,I Hope,2020,42
+Dan + Shay,"10,000 Hours",2020,43
+Lil Baby,We Paid,2020,44
+Doja Cat,Like That,2020,45
+DaBaby,Bop,2020,46
+Roddy Ricch,High Fashion,2020,47
+Lil Mosey,Blueberry Faygo,2020,48
+Black Eyed Peas,Ritmo,2020,49
+Post Malone,Wow,2020,50
+Lil Baby,Emotionally Scarred,2020,51
+Ariana Grande,Positions,2020,52
+StaySolidRocky,Party Girl,2020,53
+Internet Money,Lemonade,2020,54
+Future,Hard to Choose One,2020,55
+Pop Smoke,For the Night,2020,56
+Lil Uzi Vert,Futsal Shuffle 2020,2020,57
+Megan Thee Stallion,Captain Hook,2020,58
+Conan Gray,Heather,2020,59
+Bad Bunny,Dakiti,2020,60
+Shawn Mendes,Senorita,2020,61
+Lil Durk,Viral Moment,2020,62
+Polo G,Go Stupid,2020,63
+Jack Harlow,Tyler Herro,2020,64
+Drake,Chicago Freestyle,2020,65
+Ariana Grande,Rain on Me,2020,66
+Doja Cat,Streets,2020,67
+Miley Cyrus,Midnight Sky,2020,68
+Taylor Swift,Cardigan,2020,69
+Lewis Capaldi,Hold Me While You Wait,2020,70
+BENEE,Supalonely,2020,71
+Roddy Ricch,Please Excuse Me for Being Antisocial,2020,72
+Juice WRLD,Come and Go,2020,73
+Pop Smoke,Mood Swings,2020,74
+Gunna,Dollaz on My Head,2020,75
+Megan Thee Stallion,Girls in the Hood,2020,76
+Joel Corry,Lonely,2020,77
+Sam Smith,Dancing with a Stranger,2020,78
+Topic,Breaking Me,2020,79
+Lil Tjay,20/20,2020,80
+KAROL G,Tusa,2020,81
+Eminem,Godzilla,2020,82
+Taylor Swift,Willow,2020,83
+The Weeknd,In Your Eyes,2020,84
+Halsey,You Should Be Sad,2020,85
+Dua Lipa,Physical,2020,86
+Megan Thee Stallion,B.I.T.C.H.,2020,87
+Future,Life Is Good Remix,2020,88
+Saweetie,Tap In,2020,89
+Young Thug,The London,2020,90
+Dua Lipa,Levitating,2021,1
+Olivia Rodrigo,Drivers License,2021,2
+The Weeknd,Save Your Tears,2021,3
+The Kid Laroi,Stay,2021,4
+Olivia Rodrigo,Good 4 U,2021,5
+Doja Cat,Kiss Me More,2021,6
+Silk Sonic,Leave the Door Open,2021,7
+Cardi B,Up,2021,8
+Lil Nas X,Montero,2021,9
+Glass Animals,Heat Waves,2021,10
+Olivia Rodrigo,Deja Vu,2021,11
+Justin Bieber,Peaches,2021,12
+Polo G,Rapstar,2021,13
+BTS,Butter,2021,14
+Lil Nas X,Industry Baby,2021,15
+Doja Cat,Need to Know,2021,16
+Dua Lipa,Don't Start Now,2021,17
+Masked Wolf,Astronaut in the Ocean,2021,18
+Lil Tjay,Calling My Phone,2021,19
+24kGoldn,Mood,2021,20
+The Weeknd,Blinding Lights,2021,21
+Olivia Rodrigo,Traitor,2021,22
+Ed Sheeran,Bad Habits,2021,23
+Walker Hayes,Fancy Like,2021,24
+Bruno Mars,Leave the Door Open,2021,25
+Drake,Way 2 Sexy,2021,26
+Olivia Rodrigo,Brutal,2021,27
+Doja Cat,Woman,2021,28
+The Weeknd,Save Your Tears Remix,2021,29
+Justin Bieber,Stay,2021,30
+Giveon,Heartbreak Anniversary,2021,31
+Drake,Knife Talk,2021,32
+Pooh Shiesty,Back in Blood,2021,33
+Lil Nas X,Sun Goes Down,2021,34
+Maroon 5,Beautiful Mistakes,2021,35
+Chris Brown,Go Crazy,2021,36
+SZA,Good Days,2021,37
+Doja Cat,You Right,2021,38
+Cardi B,WAP,2021,39
+Drake,Laugh Now Cry Later,2021,40
+J. Cole,My Life,2021,41
+Migos,Straightenin,2021,42
+Moneybagg Yo,Wockesha,2021,43
+Tyler the Creator,Wusyaname,2021,44
+Coldplay,My Universe,2021,45
+Adele,Easy on Me,2021,46
+Ariana Grande,Positions,2021,47
+The Weeknd,Take My Breath,2021,48
+Lil Durk,Laugh Now Cry Later,2021,49
+Kali Uchis,Telepatia,2021,50
+Tate McRae,You Broke Me First,2021,51
+Pop Smoke,What You Know Bout Love,2021,52
+Megan Thee Stallion,Body,2021,53
+Rod Wave,Tombstone,2021,54
+Roddy Ricch,Late at Night,2021,55
+Drake,Girls Want Girls,2021,56
+Drake,Fair Trade,2021,57
+Saweetie,Best Friend,2021,58
+Justin Bieber,Holy,2021,59
+Doja Cat,Streets,2021,60
+Lil Baby,On Me,2021,61
+Ariana Grande,34+35,2021,62
+Jason Derulo,Take You Dancing,2021,63
+DJ Khaled,Every Chance I Get,2021,64
+Lil Tjay,Headshot,2021,65
+Young Stoner Life,Solid,2021,66
+Russ,Take You Dancing,2021,67
+Internet Money,His & Hers,2021,68
+Tiesto,The Business,2021,69
+Migos,Type Shit,2021,70
+Gera MX,Botella Tras Botella,2021,71
+Olivia Rodrigo,Happier,2021,72
+Bo Burnham,All Eyes on Me,2021,73
+Toosii,What It Cost,2021,74
+Lil Durk,Finesse Out the Gang Way,2021,75
+Dua Lipa,We're Good,2021,76
+Polo G,Gang Gang,2021,77
+Kanye West,Hurricane,2021,78
+Rauw Alejandro,Todo de Ti,2021,79
+CKay,Love Nwantiti,2021,80
+Elton John,Cold Heart,2021,81
+Ed Sheeran,Shivers,2021,82
+The Weeknd,Out of Time,2021,83
+Doja Cat,Get into It,2021,84
+Nardo Wick,Who Want Smoke,2021,85
+Kacey Musgraves,Justified,2021,86
+Yung Bleu,You're Mines Still,2021,87
+Luke Combs,Forever After All,2021,88
+Chris Stapleton,Starting Over,2021,89
+Bad Bunny,Dakiti,2021,90
+Harry Styles,As It Was,2022,1
+Glass Animals,Heat Waves,2022,2
+Jack Harlow,First Class,2022,3
+Future,Wait for U,2022,4
+Lizzo,About Damn Time,2022,5
+Kate Bush,Running Up That Hill,2022,6
+Bad Bunny,Me Porto Bonito,2022,7
+Steve Lacy,Bad Habit,2022,8
+Sam Smith,Unholy,2022,9
+Taylor Swift,Anti-Hero,2022,10
+Bad Bunny,Titi Me Pregunto,2022,11
+Beyonce,Break My Soul,2022,12
+The Kid Laroi,Stay,2022,13
+Nicky Youre,Sunroof,2022,14
+Em Beihold,Numb Little Bug,2022,15
+Lil Nas X,Industry Baby,2022,16
+Gunna,Pushin P,2022,17
+Jack Harlow,Industry Baby,2022,18
+Doja Cat,Vegas,2022,19
+Nicki Minaj,Super Freaky Girl,2022,20
+Latto,Big Energy,2022,21
+Post Malone,I Like You,2022,22
+OneRepublic,I Ain't Worried,2022,23
+Drake,Jimmy Cooks,2022,24
+Imagine Dragons,Enemy,2022,25
+Charlie Puth,Light Switch,2022,26
+Future,Puffin on Zootiez,2022,27
+Encanto Cast,We Don't Talk About Bruno,2022,28
+Megan Thee Stallion,Sweetest Pie,2022,29
+Bad Bunny,Moscow Mule,2022,30
+Adele,Easy on Me,2022,31
+Elton John,Cold Heart,2022,32
+GAYLE,abcdefu,2022,33
+The Weeknd,Out of Time,2022,34
+Morgan Wallen,Wasted on You,2022,35
+Cody Johnson,Til You Can't,2022,36
+Lainey Wilson,Heart Like a Truck,2022,37
+Zach Bryan,Something in the Orange,2022,38
+Luke Combs,The Kind of Love We Make,2022,39
+Carrie Underwood,Ghost Story,2022,40
+DJ Khaled,Staying Alive,2022,41
+Future,I Never Liked You,2022,42
+Kendrick Lamar,N95,2022,43
+Jack Harlow,Churchill Downs,2022,44
+Lil Baby,In a Minute,2022,45
+Roddy Ricch,The Box,2022,46
+Megan Thee Stallion,Plan B,2022,47
+Lizzo,2 Be Loved,2022,48
+Doja Cat,Woman,2022,49
+Harry Styles,Late Night Talking,2022,50
+Lauv,26,2022,51
+Camila Cabello,Bam Bam,2022,52
+Rosa Linn,Snap,2022,53
+Joji,Glimpse of Us,2022,54
+Beyonce,Cuff It,2022,55
+Future,Massaging Me,2022,56
+Drake,Sticky,2022,57
+Tion Wayne,Body,2022,58
+Muni Long,Hrs and Hrs,2022,59
+Tems,Free Mind,2022,60
+Frank Ocean,Lost,2022,61
+Yung Gravy,Betty,2022,62
+Babytron,Emperor of the Universe,2022,63
+DripReport,Skechers,2022,64
+ScHoolboy Q,THat Part,2022,65
+Quavo,Hotel Lobby,2022,66
+Burna Boy,Last Last,2022,67
+Stephen Sanchez,Until I Found You,2022,68
+Steve Lacy,Static,2022,69
+Lizzo,Grrrls,2022,70
+The Weeknd,Sacrifice,2022,71
+Future,Keep It Burnin,2022,72
+Kendrick Lamar,Die Hard,2022,73
+Megan Thee Stallion,Her,2022,74
+Bad Bunny,Efecto,2022,75
+Rauw Alejandro,Desesperados,2022,76
+Anitta,Envolver,2022,77
+Chris Brown,Under the Influence,2022,78
+PinkPantheress,Just for Me,2022,79
+Coi Leray,Players,2022,80
+Nardo Wick,Who Want Smoke,2022,81
+Hitkidd,Shabooya,2022,82
+GloRilla,F.N.F.,2022,83
+Kodak Black,Super Gremlin,2022,84
+Gunna,Banking on Me,2022,85
+Lil Durk,Broadway Girls,2022,86
+Polo G,Distraction,2022,87
+Future,712PM,2022,88
+Mary J. Blige,Good Morning Gorgeous,2022,89
+Cigarettes After Sex,Apocalypse,2022,90
+Morgan Wallen,Last Night,2023,1
+Miley Cyrus,Flowers,2023,2
+Taylor Swift,Anti-Hero,2023,3
+SZA,Kill Bill,2023,4
+Jung Kook,Seven,2023,5
+Rema,Calm Down,2023,6
+Doja Cat,Paint the Town Red,2023,7
+Taylor Swift,Cruel Summer,2023,8
+Olivia Rodrigo,Vampire,2023,9
+Eslabon Armado,Ella Baila Sola,2023,10
+Luke Combs,Fast Car,2023,11
+Dua Lipa,Dance the Night,2023,12
+Metro Boomin,Creepin',2023,13
+Taylor Swift,Karma,2023,14
+SZA,Snooze,2023,15
+Rema,Calm Down Remix,2023,16
+Toosii,Favorite Song,2023,17
+Drake,Rich Flex,2023,18
+Peso Pluma,Ella Baila Sola,2023,19
+Zach Bryan,Something in the Orange,2023,20
+Olivia Rodrigo,Get Him Back,2023,21
+Yng Lvcas,La Bebe,2023,22
+Gunna,Fukumean,2023,23
+Tyla,Water,2023,24
+Lil Durk,All My Life,2023,25
+David Kushner,Daylight,2023,26
+Jimin,Like Crazy,2023,27
+Lil Uzi Vert,Just Wanna Rock,2023,28
+PinkPantheress,Boy's a Liar,2023,29
+Doja Cat,Agora Hills,2023,30
+Bizarrap,Shakira BZRP Music Sessions 53,2023,31
+Morgan Wallen,You Proof,2023,32
+Morgan Wallen,Thinkin Bout Me,2023,33
+Taylor Swift,Snow on the Beach,2023,34
+Bad Bunny,Where She Goes,2023,35
+Karol G,TQG,2023,36
+Peso Pluma,Lady Gaga,2023,37
+Drake,Search & Rescue,2023,38
+Travis Scott,Meltdown,2023,39
+Doja Cat,Attention,2023,40
+Nicki Minaj,Barbie World,2023,41
+Dua Lipa,Houdini,2023,42
+Jelly Roll,Need a Favor,2023,43
+Chris Stapleton,White Horse,2023,44
+Morgan Wallen,One Thing at a Time,2023,45
+Bailey Zimmerman,Rock and a Hard Place,2023,46
+HARDY,Wait in the Truck,2023,47
+Oliver Anthony,Rich Men North of Richmond,2023,48
+Zach Bryan,I Remember Everything,2023,49
+Doechii,What It Is,2023,50
+Coi Leray,Players,2023,51
+Kaliii,Area Codes,2023,52
+NLE Choppa,Slut Me Out,2023,53
+Lil Durk,Stand by Me,2023,54
+Metro Boomin,Superhero,2023,55
+The Weeknd,Creepin,2023,56
+Lana Del Rey,Say Yes to Heaven,2023,57
+Travis Scott,FE!N,2023,58
+Drake,Slime You Out,2023,59
+Olivia Rodrigo,Bad Idea Right,2023,60
+Fifty Fifty,Cupid,2023,61
+Taylor Swift,Is It Over Now,2023,62
+SZA,Low,2023,63
+21 Savage,Redrum,2023,64
+Sped Up Nightcore,Sped Up,2023,65
+Tate McRae,Greedy,2023,66
+Doja Cat,Demons,2023,67
+Post Malone,Mourning,2023,68
+Ed Sheeran,Eyes Closed,2023,69
+Niall Horan,Heaven,2023,70
+Calvin Harris,Miracle,2023,71
+Megan Thee Stallion,Cobra,2023,72
+GloRilla,Tomorrow 2,2023,73
+Kali,Area Codes,2023,74
+Central Cee,Let Go,2023,75
+Rae Sremmurd,Not So Bad,2023,76
+Sabrina Carpenter,Feather,2023,77
+Tyla,Truth or Dare,2023,78
+Peso Pluma,Bipolar,2023,79
+Junior H,El Azul,2023,80
+Grupo Frontera,Un x100to,2023,81
+Bad Bunny,Monaco,2023,82
+Drake,IDGAF,2023,83
+J Hus,Who Told You,2023,84
+Lil Yachty,Poland,2023,85
+Jung Kook,Standing Next to You,2023,86
+Jung Kook,3D,2023,87
+Stray Kids,Lalalala,2023,88
+New Jeans,Super Shy,2023,89
+Mitski,My Love Mine All Mine,2023,90
+Shaboozey,A Bar Song,2024,1
+Teddy Swims,Lose Control,2024,2
+Benson Boone,Beautiful Things,2024,3
+Sabrina Carpenter,Espresso,2024,4
+Kendrick Lamar,Not Like Us,2024,5
+Hozier,Too Sweet,2024,6
+Post Malone,I Had Some Help,2024,7
+Tommy Richman,Million Dollar Baby,2024,8
+Billie Eilish,Birds of a Feather,2024,9
+Sabrina Carpenter,Please Please Please,2024,10
+Chappell Roan,"Good Luck, Babe!",2024,11
+Taylor Swift,Fortnight,2024,12
+Lady Gaga,Die with a Smile,2024,13
+Jack Harlow,Lovin on Me,2024,14
+Future,Like That,2024,15
+Sabrina Carpenter,Taste,2024,16
+Morgan Wallen,I Had Some Help,2024,17
+Noah Kahan,Stick Season,2024,18
+Tate McRae,Greedy,2024,19
+Djo,End of Beginning,2024,20
+Gracie Abrams,That's So True,2024,21
+Eminem,Houdini,2024,22
+Beyonce,Texas Hold 'Em,2024,23
+Ariana Grande,We Can't Be Friends,2024,24
+Rose,Apt,2024,25
+Kendrick Lamar,Like That,2024,26
+Zach Bryan,I Remember Everything,2024,27
+Hozier,Too Sweet,2024,28
+Chappell Roan,Hot to Go,2024,29
+Benson Boone,Slow It Down,2024,30
+Morgan Wallen,Lies Lies Lies,2024,31
+Shaboozey,Good News,2024,32
+Tinashe,Nasty,2024,33
+Megan Thee Stallion,Hiss,2024,34
+Doja Cat,Agora Hills,2024,35
+Taylor Swift,I Can Do It with a Broken Heart,2024,36
+Sabrina Carpenter,Bed Chem,2024,37
+Chappell Roan,Pink Pony Club,2024,38
+Kendrick Lamar,Euphoria,2024,39
+Future,Type Shit,2024,40
+Drake,Family Matters,2024,41
+Metro Boomin,Like That,2024,42
+Tyler the Creator,Noid,2024,43
+Gunna,Fukumean,2024,44
+Tommy Richman,Devil Is a Lie,2024,45
+Flo Milli,Never Lose Me,2024,46
+GloRilla,Yeah Glo,2024,47
+Cardi B,Enough Miami,2024,48
+Sexyy Red,Get It Sexyy,2024,49
+Lil Tecca,500lbs,2024,50
+Taylor Swift,Down Bad,2024,51
+Billie Eilish,Lunch,2024,52
+Chappell Roan,Good Luck Babe,2024,53
+Ariana Grande,Yes And,2024,54
+Dua Lipa,Houdini,2024,55
+Charli XCX,360,2024,56
+Charli XCX,Guess,2024,57
+Sabrina Carpenter,Nonsense,2024,58
+Morgan Wallen,Cowgirls,2024,59
+Post Malone,Pour Me a Drink,2024,60
+Luke Combs,Where the Wild Things Are,2024,61
+Jelly Roll,I Am Not Okay,2024,62
+Zach Bryan,Pink Skies,2024,63
+Kacey Musgraves,Deeper Well,2024,64
+Noah Kahan,Dial Drunk,2024,65
+Benson Boone,In the Stars,2024,66
+Teddy Swims,The Door,2024,67
+Tate McRae,Exes,2024,68
+Gracie Abrams,Close to You,2024,69
+Hozier,Unknown Nth,2024,70
+Myles Smith,Stargazing,2024,71
+Lola Young,Messy,2024,72
+Artemas,I Like the Way You Kiss Me,2024,73
+Benson Boone,Sugar Sweet,2024,74
+Sophie Ellis-Bextor,Murder on the Dancefloor,2024,75
+Tevin Campbell,Sapphire,2024,76
+Mark Ambor,Belong Together,2024,77
+Le Sserafim,Easy,2024,78
+New Jeans,Supernatural,2024,79
+Lisa,Rockstar,2024,80
+Future,We Still Don't Trust You,2024,81
+ScHoolboy Q,Yeern 101,2024,82
+21 Savage,Redrum,2024,83
+Sexyy Red,Get It Sexyy,2024,84
+BossMan Dlow,Get in with Me,2024,85
+Cash Cobain,Fisherrr,2024,86
+Rich Amiri,One Call,2024,87
+4Batz,Act ii Date at 8,2024,88
+Muni Long,Made for Me,2024,89
+Kehlani,After Hours,2024,90
+Kendrick Lamar,Luther,2025,1
+Kendrick Lamar,Squabble Up,2025,2
+Lady Gaga,Die with a Smile,2025,3
+The Weeknd,Timeless,2025,4
+Alex Warren,Ordinary,2025,5
+Bad Bunny,DtMF,2025,6
+Lady Gaga,Abracadabra,2025,7
+Rose,Apt,2025,8
+Sabrina Carpenter,Manchild,2025,9
+Doechii,Anxiety,2025,10
+Morgan Wallen,I'm the Problem,2025,11
+Drake,Nokia,2025,12
+Billie Eilish,Birds of a Feather,2025,13
+Lola Young,Messy,2025,14
+Tate McRae,Sports Car,2025,15
+Gracie Abrams,That's So True,2025,16
+Teddy Swims,Lose Control,2025,17
+ROSE,Number One Girl,2025,18
+The Weeknd,Cry for Me,2025,19
+Morgan Wallen,Lies Lies Lies,2025,20
+Post Malone,Pour Me a Drink,2025,21
+Mariah The Scientist,Burning Blue,2025,22
+Teddy Swims,Bad Dreams,2025,23
+Shaboozey,A Bar Song,2025,24
+Benson Boone,Beautiful Things,2025,25
+Morgan Wallen,Just in Case,2025,26
+Kendrick Lamar,TV Off,2025,27
+Playboi Carti,Rather Lie,2025,28
+Bad Bunny,Baile Inolvidable,2025,29
+Bad Bunny,Nuevayol,2025,30
+Chappell Roan,Pink Pony Club,2025,31
+Chappell Roan,The Giver,2025,32
+Sabrina Carpenter,Espresso,2025,33
+Selena Gomez,Sunset Blvd,2025,34
+Morgan Wallen,Smile,2025,35
+Jessie Murph,Blue Strips,2025,36
+Hozier,Too Sweet,2025,37
+Gigi Perez,Sailor Song,2025,38
+Tate McRae,Just Keep Watching,2025,39
+Ravyn Lenae,Love Me Not,2025,40
+Megan Moroney,Am I Okay,2025,41
+Luke Combs,Ain't No Love in Oklahoma,2025,42
+Zach Bryan,Pink Skies,2025,43
+Morgan Wallen,Love Somebody,2025,44
+Wyatt Flores,Stillhouse,2025,45
+Jelly Roll,Liar,2025,46
+Post Malone,I Had Some Help,2025,47
+Shaboozey,Good News,2025,48
+Gracie Abrams,I Love You I'm Sorry,2025,49
+Lainey Wilson,4x4xu,2025,50
+Sombr,Back to Friends,2025,51
+Sombr,Undressed,2025,52
+Alex Warren,Bloodline,2025,53
+Benson Boone,Sorry I'm Here for Someone Else,2025,54
+Sabrina Carpenter,Taste,2025,55
+Playboi Carti,Mojo Jojo,2025,56
+Future,Like That,2025,57
+GloRilla,TGIF,2025,58
+GloRilla,Whatchu Kno About Me,2025,59
+Lil Wayne,Banned from NO,2025,60
+Doechii,Denial Is a River,2025,61
+SZA,Saturn,2025,62
+Kendrick Lamar,Gloria,2025,63
+Kendrick Lamar,Reincarnated,2025,64
+Bruno Mars,Die with a Smile,2025,65
+ROSE,Toxic Till the End,2025,66
+Tyla,Push 2 Start,2025,67
+Tate McRae,It's OK I'm OK,2025,68
+Addison Rae,Diet Pepsi,2025,69
+Ariana Grande,Twilight Zone,2025,70
+Billie Eilish,Wildflower,2025,71
+Lady Gaga,Disease,2025,72
+The Weeknd,São Paulo,2025,73
+Kali Uchis,Igual Que un Angel,2025,74
+Bad Bunny,Veldá,2025,75
+Bad Bunny,Eoo,2025,76
+Karol G,Si Antes Te Hubiera Conocido,2025,77
+Fuerza Regida,Harley Quinn,2025,78
+Junior H,Mi Vida Mi Muerte,2025,79
+Eslabon Armado,Lonely Road,2025,80

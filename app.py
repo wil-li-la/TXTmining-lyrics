@@ -223,7 +223,7 @@ with tab_rec:
 # Analyze tab
 # ----------------------------------------------------------------------
 with tab_analyze:
-    st.caption("How lyrics changed across decades and genres — based on the 4,869-song corpus.")
+    st.caption("How lyrics changed across decades and genres — based on the 5,205-song corpus.")
 
     if not data_loaded:
         st.info("Pipeline data not loaded.")
