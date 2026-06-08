@@ -5,6 +5,9 @@ venv/
 .pytest_cache/
 .env
 
+# Visual-companion brainstorm artifacts
+.superpowers/
+
 # Old, unused artifacts from initial pipeline
 data/tfidf_matrix.pkl
 data/tfidf_vocab.pkl
