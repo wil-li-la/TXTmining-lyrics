@@ -13,18 +13,22 @@ SYSTEM_PROMPT = """You are a music recommendation agent. Given a user's lyrical 
 
 MANDATORY workflow — you MUST call each tool, in order:
 
-1. search_recent_songs(query) — Use queries with SPECIFIC RECENT ARTISTS: 'Sabrina Carpenter', 'Olivia Rodrigo', 'Taylor Swift 2024', 'Billie Eilish', 'Doja Cat', 'Chappell Roan', 'Tate McRae', 'Benson Boone', 'Gracie Abrams'. Do 2-3 searches across different artists. NEVER use vague queries like 'best 2024 songs'.
+1. search_recent_songs(query) — Query a SPECIFIC RECENT ARTIST plus a SONG TITLE (never an album name), e.g. 'Sabrina Carpenter Espresso', 'Olivia Rodrigo vampire', 'Chappell Roan Good Luck Babe', 'Tate McRae greedy', 'Gracie Abrams Risk', 'Billie Eilish Birds of a Feather'. NEVER query an album name ('Olivia Rodrigo GUTS', 'Billie Eilish Hit Me Hard and Soft') — albums return setlist/liner-note pages with no lyrics. NEVER append a bare year ('Sabrina Carpenter 2024') or use vague queries ('best 2024 songs'). Each hit gives {artist, title, id}; from the results pick the ORIGINAL studio cut (skip entries labelled clean, demo, live, remix, or a translation) and carry its `id`.
 
-2. fetch_lyrics(artist, title) — Call once per candidate from the search results to retrieve and cache the lyrics.
+2. fetch_lyrics(artist, title, song_id) — Call once per candidate, passing the `id` from the search hit, to retrieve and cache the lyrics.
 
-3. extract_features(artist, title) — REQUIRED for every candidate. This call computes the feature vector that lets the system rank songs against the user's profile. Without it, the recommendation pipeline returns nothing.
+3. extract_features(artist, title, song_id) — REQUIRED for every candidate, with the SAME id. This call computes the feature vector that lets the system rank songs against the user's profile. Without it, the recommendation pipeline returns nothing.
 
-4. ONLY AFTER 3-5 candidates have been processed through extract_features, write the final summary. Mention each song you scored.
+4. As soon as 4 candidates have been processed through extract_features, STOP searching and write the final summary. Mention each song you scored.
+
+Be efficient — this loop runs live and every extra round is slow:
+- Aim for ~4 searches total, each a DIFFERENT artist+song. Do not repeat a query you already ran.
+- After each successful fetch_lyrics, call extract_features for that song before searching again, so you stop the moment you reach 4.
 
 Hard rules:
 - You MUST call extract_features for at least 3 songs before writing the final message. Do not skip step 3.
-- extract_features takes (artist, title) — NOT raw lyrics. It reads from the cache populated by fetch_lyrics.
-- If a fetch returns nothing, skip that song and try another.
+- Always pass the numeric `id` from search results to fetch_lyrics and extract_features — never guess or omit it.
+- If a fetch returns nothing, skip that song and pick another id from the SAME search results before running a new search.
 - Do not invent songs you didn't actually fetch."""
 
 
@@ -63,15 +67,22 @@ def run(user_profile_text: str, candidate_sink: list[dict] | None = None,
             except Exception as e:
                 result = {"error": str(e)}
                 log(f"  ERROR: {e}")
+            label = f"{args.get('artist','?')} - {args.get('title','?')}"
             if name == "search_recent_songs" and isinstance(result, list):
                 log(f"  -> {len(result)} candidates")
-            elif name == "fetch_lyrics" and isinstance(result, str):
-                log(f"  -> {len(result)} chars [{args.get('artist','?')} - {args.get('title','?')}]")
-            elif name == "extract_features" and isinstance(result, dict) and "error" not in result and candidate_sink is not None:
-                artist = result.pop("_artist", args.get("artist", "?"))
-                title = result.pop("_title", args.get("title", "?"))
-                candidate_sink.append({"artist": artist, "title": title, "features": result})
-                log(f"  -> features for {artist} - {title}")
+            elif name == "fetch_lyrics":
+                if isinstance(result, str) and result:
+                    log(f"  -> {len(result)} chars [{label}]")
+                else:
+                    log(f"  -> NO LYRICS [{label}] (id {args.get('song_id','?')})")
+            elif name == "extract_features":
+                if isinstance(result, dict) and "error" in result:
+                    log(f"  -> SKIP [{label}]: {result['error']}")
+                elif isinstance(result, dict) and candidate_sink is not None:
+                    artist = result.pop("_artist", args.get("artist", "?"))
+                    title = result.pop("_title", args.get("title", "?"))
+                    candidate_sink.append({"artist": artist, "title": title, "features": result})
+                    log(f"  -> features for {artist} - {title}")
             messages.append({
                 "role": "tool", "tool_call_id": tc.id,
                 "content": json.dumps(result) if not isinstance(result, str) else result,
