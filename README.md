@@ -6,25 +6,25 @@ colorTo: yellow
 sdk: docker
 app_port: 7860
 pinned: false
-short_description: Set your taste profile; agent finds recent matching songs.
+short_description: Rank the song catalog to match your lyrical taste
 ---
 
 # Pop Lyrics Taste Profiler
 
-A Streamlit app that lets you set a lyrical taste profile (6 sliders over emotion, repetition, concreteness, rhyme density, self-focus) and have an OpenAI-powered agent find recent Billboard songs that match — by live-fetching lyrics from Genius, scoring them on the same feature vector, and ranking by cosine similarity to your profile.
+A Streamlit app that lets you set a lyrical taste profile (6 sliders over emotion, repetition, concreteness, rhyme density, self-focus) and ranks the entire 1965–2025 catalog to find the songs that match — deterministically, by cosine similarity over precomputed lyric features. An OpenAI model (`gpt-4o-mini`) then writes a short explanation of why the matches fit; it never selects or scores the songs. (See `report.md` §6 and `docs/adr/0001` for why this replaced an earlier live-search agent.)
 
 Built on a 5,205-song corpus spanning 1965–2025 (Billboard Year-End Hot 100 via `walkerkq/musiclyrics` + a 2016–2025 supplemental fetch, lrclib-first with a Genius fallback).
 
 ## Two tabs
 
-- **🎧 Recommend** — adjust sliders, click _Find matching recent songs_, watch the agent search Genius, fetch lyrics, extract features, and rank.
+- **🎧 Recommend** — adjust sliders, click _Find matching songs_, watch the whole catalog get ranked against your profile, then read the explanation of the top-5.
 - **📊 Analyze** — per-decade style profiles, cross-decade heatmap, year-by-year trend plots, and the classifier result (41% accuracy, no artist leakage).
 
 ## Required secrets (set in Space settings)
 
 | Name | Get it from |
 |---|---|
-| `OPENAI_API_KEY` | https://platform.openai.com/api-keys (used for the agent's tool-use loop with `gpt-4o-mini`) |
+| `OPENAI_API_KEY` | https://platform.openai.com/api-keys (used by `gpt-4o-mini` to write the match explanation; ranking is deterministic and works without it) |
 | `GENIUS_ACCESS_TOKEN` | https://genius.com/api-clients — click **Generate Access Token** on your client (this is NOT the same as `client_id` / `client_secret`) |
 
 ## Local development

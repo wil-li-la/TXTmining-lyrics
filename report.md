@@ -124,9 +124,9 @@ A complete set of 22 trend plots covering all features is included in `output/tr
 
 ---
 
-## 6. The Recommendation Agent
+## 6. The Recommendation Engine
 
-The classifier asks "what era does this lyric belong to?" — academic but not useful. The recommendation agent flips the framing: "given a user's preferred lyric style, what recent songs match?"
+The classifier asks "what era does this lyric belong to?" — academic but not useful. The recommender flips the framing: "given a user's preferred lyric style, which songs in the catalog match?"
 
 ### 6.1 Architecture
 
@@ -137,21 +137,27 @@ The classifier asks "what era does this lyric belong to?" — academic but not u
 └────────────────────┬───────────────────────────────────┘
                      │
 ┌────────────────────▼───────────────────────────────────┐
-│ OpenAI gpt-4o-mini agent (tool-use loop)               │
-│   ┌─ search_recent_songs(query) → Genius search API    │
-│   ├─ fetch_lyrics(artist, title) → LyricsGenius        │
-│   └─ extract_features(artist, title) → 7-module batch  │
+│ Deterministic retrieval (Python, not LLM judgment)     │
+│   rank ALL 5,204 catalog songs (song_features.parquet) │
+│   relevance = cosine on provenance-safe features:      │
+│     valence, arousal, concreteness, self-focus         │
+│   rhyme + repetition: tie-breaker among 2016+ only     │
+│   sentence embedding: dedup near-duplicate songs       │
+│   → top-5 with per-feature comparison chart            │
 └────────────────────┬───────────────────────────────────┘
                      │
 ┌────────────────────▼───────────────────────────────────┐
-│ Deterministic ranking (Python, not LLM judgment)       │
-│   z-score candidates against corpus stats              │
-│   cosine similarity to user target                     │
-│   → top-5 with per-feature comparison chart            │
+│ OpenAI gpt-4o-mini — explanation only                  │
+│   writes "why these match" prose over ranked results   │
+│   (live Genius tool-use loop retained as a fallback)   │
 └────────────────────────────────────────────────────────┘
 ```
 
-The LLM does **search strategy** and **natural-language explanations** but never the scoring itself — that's deterministic Python. This keeps recommendations reproducible (same profile = same shortlist).
+Candidate selection and scoring are **deterministic Python** — the LLM only writes the natural-language explanation over the already-ranked top-5. Same profile = same shortlist, for real.
+
+**Why this replaced the original live-search agent (see [ADR-0001](docs/adr/0001-recommend-by-retrieval-on-provenance-safe-features.md)).** The first version was an OpenAI tool-use loop that searched Genius live and ranked whatever it fetched. Its prompt and tool schema hardcoded six example artist+song pairs (Sabrina Carpenter, Olivia Rodrigo, Chappell Roan, Tate McRae, Gracie Abrams, Billie Eilish). A small model copies such examples near-verbatim, so the candidate pool collapsed onto those few artists *regardless of the slider profile* — recommendations were dominated by Sabrina Carpenter. Worse, live free-text search cannot target the profile at all: a song's features are unknown until after it is fetched, so the sliders only re-ordered a biased, near-constant pool. Retrieval over the precomputed feature index fixes both problems — every one of the 5,204 catalog songs is a genuine candidate, ranked by how its features actually match the profile.
+
+**The provenance caveat, handled honestly.** Ranking the whole catalog means competing pre-2016 and post-2016 songs. Line-based features (rhyme, repetition) are fixed near zero for the 4,633 line-break-stripped pre-2016 songs (§7), so ranking on them would swap the visible artist bias for an invisible *era* bias. The fix: relevance uses only the four provenance-safe features (valence, arousal, concreteness, self-focus), which are line-break-invariant. Rhyme and repetition are demoted to a tie-breaker that only reorders 2016+ songs already tied on the safe features — and never gives recent songs an unfair boost when the listener expresses no rhyme/repetition preference. The sentence embedding is used only to drop near-duplicate results (alternate mixes, clean edits of the same track), never for relevance.
 
 ### 6.2 Deployment
 
@@ -159,27 +165,27 @@ The app is hosted on Hugging Face Spaces (Docker SDK, CPU basic free tier) at ht
 
 Three secrets configured via Spaces UI:
 
-- `OPENAI_API_KEY` — for the agent's tool-use loop
-- `GENIUS_ACCESS_TOKEN` — for LyricsGenius
-- `APP_PASSWORD` — a shared password gate (visible in `app.py`'s `_password_gate` function) that blocks anonymous visitors from burning my OpenAI quota. The agent module is imported **after** the gate clears, so unauthenticated visitors can't even construct the OpenAI client.
+- `OPENAI_API_KEY` — for the explanation prose (and the live-search fallback). Note: ranking no longer depends on it, so recommendations are correct and reproducible even if the model is unavailable; only the prose needs it.
+- `GENIUS_ACCESS_TOKEN` — for LyricsGenius, used only by the retained fallback path.
+- `APP_PASSWORD` — a shared password gate (visible in `app.py`'s `_password_gate` function) that blocks anonymous visitors from burning my OpenAI quota. The recommender module is imported **after** the gate clears, so unauthenticated visitors can't even construct the OpenAI client.
 
 The Dockerfile pre-downloads the SBERT model (~90 MB) at build time so the first user-facing request doesn't pay that cost.
 
-### 6.3 Five screenshots of the agent in action
+### 6.3 Screenshots of the recommender in action
 
-(Saved at full resolution in `output/screenshots/`.)
+(Saved at full resolution in `output/screenshots/recommend_*.png`. These supersede the earlier `01_initial`–`05_ranked` shots, which captured the original live-search agent and its single-artist clustering.)
 
-1. **`01_initial.png`** — landing state. Six taste sliders at 0, corpus chart in the sidebar showing the 5,205-song distribution by decade.
-2. **`02_profile_set.png`** — sliders adjusted to a non-trivial profile (valence +0.8, arousal +1.1, repetition +0.9, rhyme +1.2, concreteness +1.0, self-focus +1.3). Each slider has a `?` tooltip with two concrete song examples (e.g., for self-focus: *USA for Africa — We Are the World* vs *Olivia Rodrigo — drivers license*).
-3. **`03_searching.png`** — agent trace mid-search. Three `search_recent_songs` calls visible (Sabrina Carpenter, Olivia Rodrigo, Gracie Abrams), each returning candidate counts.
-4. **`04_scoring.png`** — trace progressing through the workflow: searches → `fetch_lyrics` → `extract_features` calls for specific (artist, title) pairs.
-5. **`05_ranked.png`** — top-5 recommendations populated. Sabrina Carpenter's *Feather* (April and March mixes) at similarity 0.72 and 0.70, with bar charts comparing the song's z-scored features to the user's profile.
+1. **`recommend_01_profile.png`** — six taste sliders set to a non-trivial profile (valence +1.5, arousal +0.8, repetition +1.2, rhyme +1.4, concreteness −0.6, self-focus −1.0). Each slider has a `?` tooltip with two concrete song examples (e.g., for self-focus: *USA for Africa — We Are the World* vs *Olivia Rodrigo — drivers license*).
+2. **`recommend_02_ranking_progress.png`** — the deterministic ranking trace: *"Ranking 5,204 songs against your taste profile…"* followed by the five selected matches spanning 1987–2020 — Cutting Crew, Mike Posner, Charlie Puth, Dua Lipa, Dan + Shay. The era and artist spread (vs. the old all-Sabrina-Carpenter clustering) is the fix made visible.
+3. **`recommend_03_why_these_match.png`** — the LLM-written explanation over the already-ranked results. This is the model's *only* job; it never selects or scores the songs.
+4. **`recommend_04_top_results.png`** — the top-5 with per-feature z-score comparison bar charts (song vs. your profile).
+5. **`recommend_05_full.png`** — the full Recommend tab end-to-end: profile → ranking trace → explanation → ranked results.
 
 ---
 
 ## 7. Limitations and Future Work
 
-- **Data provenance asymmetry.** The 4,633 walkerkq songs lack line breaks, which neuters our line-based features (rhyme, repetition, syllables/line) for everything pre-2016. The deployed recommendation agent works correctly because *live* Genius lyrics preserve line breaks and z-scores are computed against the same biased corpus stats for both target and candidate. But the cross-decade trend plots in §5 should be read with this caveat — the abrupt regime change at 2016 for line-based features reflects scraping methodology, not a sudden shift in songwriting.
+- **Data provenance asymmetry.** The 4,633 walkerkq songs lack line breaks, which neuters our line-based features (rhyme, repetition, syllables/line) for everything pre-2016. The recommender handles this head-on (§6.1, [ADR-0001](docs/adr/0001-recommend-by-retrieval-on-provenance-safe-features.md)): it ranks the whole catalog on the four line-break-invariant features only, so a pre-2016 song and a 2016+ song compete on signals that mean the same thing for both. The cross-decade trend plots in §5 should still be read with this caveat — the abrupt regime change at 2016 for line-based features reflects scraping methodology, not a sudden shift in songwriting.
 - **Decade imbalance (largely resolved).** An earlier version of this analysis had only 140 2020s songs and we flagged that the 0.98 AUC might be buoyed by class rarity. We tested it by expanding the 2020s to 476 songs (§4.4): the AUC held at 0.988, so the result is *not* a small-sample artifact. Two milder caveats remain — 476 is still below the ~900 of the 1970s–2000s, and the 2020s covers only six years (2020–2025), a narrower, more recent slice than the full-decade classes it is compared against.
 - **English-only.** We follow Parada-Cabaleiro 2024 in restricting to English. Spanish-language Billboard entries (Despacito, etc.) are dropped, missing the Latin pop crossover story of the 2010s.
 - **No audio.** Spotify deprecated the `audio-features` endpoint for new apps in Nov 2024 (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api), so we lack tempo, energy, key, danceability. The text-only restriction underestimates the differences between, say, a 1970s ballad and a 2020s ballad with identical lyrical profile but radically different production.

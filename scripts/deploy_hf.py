@@ -13,6 +13,12 @@ load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 REPO = "wil-li-la/pop-lyrics-taste-profiler"
 ALLOW = [
     "app.py",
+    "README.md",
+    # Recommender redesign (ADR-0001): retrieval-then-explain. These changed
+    # files MUST ship together with app.py — app.py calls the new run() signature.
+    "src/agent/ranking.py",
+    "src/agent/runner.py",
+    "src/theme.py",
     "data/song_features.parquet",
     "data/feature_stats.json",
     "data/lyrics_processed.csv",
@@ -28,7 +34,7 @@ def main() -> None:
         repo_id=REPO,
         repo_type="space",
         allow_patterns=ALLOW,
-        commit_message="Expand 2020s corpus to 476 songs; refresh features, CV, trends",
+        commit_message="Recommender: whole-catalog retrieval ranked on provenance-safe features (ADR-0001)",
     )
     print("upload done:", res)
 

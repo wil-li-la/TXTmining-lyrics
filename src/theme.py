@@ -159,7 +159,7 @@ def hero() -> None:
 <div class="bx-hero">
   <div class="bx-telemetry"><span>POP-LYRICS-PROFILER &reg;</span><span>REV 2.6 &middot; 1965&ndash;2025 +</span></div>
   <div class="bx-title">Pop Lyrics<br>Taste Profiler</div>
-  <div class="bx-sub">// set your taste &middot; the agent finds matching recent songs</div>
+  <div class="bx-sub">// set your taste &middot; rank the 1965&ndash;2025 catalog for your closest matches</div>
 </div>
 """,
         unsafe_allow_html=True,

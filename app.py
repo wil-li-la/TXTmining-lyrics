@@ -45,7 +45,7 @@ _password_gate()
 
 # Imports the agent (which initializes OpenAI client) happen AFTER the gate
 # so unauthenticated visitors don't trigger client construction.
-from src.agent.ranking import load_stats, rank
+from src.agent.ranking import load_stats
 from src.agent.runner import run
 
 # Slider config — each entry: (label, range_lo, range_hi, help_text_with_examples)
@@ -168,7 +168,7 @@ tab_rec, tab_analyze = st.tabs(["[ Recommend ]", "[ Analyze ]"])
 # Recommend tab
 # ----------------------------------------------------------------------
 with tab_rec:
-    st.caption("Set your lyrical preferences, and the agent will find recent songs that match.")
+    st.caption("Set your lyrical preferences; we rank the whole 1965–2025 catalog to find your closest matches.")
     st.subheader("Your taste profile")
 
     cols = st.columns(2)
@@ -177,33 +177,30 @@ with tab_rec:
         with cols[i % 2]:
             profile[key] = st.slider(label, lo, hi, 0.0, 0.1, key=f"slider_{key}", help=help_text)
 
-    go = st.button("Find matching recent songs ▸", type="primary", disabled=not data_loaded)
+    go = st.button("Find matching songs ▸", type="primary", disabled=not data_loaded)
 
     if go and data_loaded:
-        profile_text = "\n".join(
-            f"- {SLIDERS[k][0]}: {v:+.1f} z" for k, v in profile.items()
-        )
         candidates: list[dict] = []
         trace_lines: list[str] = []
 
-        st.subheader("Agent trace")
+        st.subheader("Ranking progress")
         trace_box = st.empty()
 
         def trace_sink(line: str) -> None:
             trace_lines.append(line)
             trace_box.code("\n".join(trace_lines[-30:]), language="text")
 
-        with st.spinner("Agent is searching…"):
-            final_msg = run(profile_text, candidate_sink=candidates, trace_sink=trace_sink)
+        with st.spinner("Ranking the catalog against your taste…"):
+            final_msg = run(profile, stats, candidate_sink=candidates, trace_sink=trace_sink)
 
-        st.subheader("Agent reasoning")
+        st.subheader("Why these match")
         st.write(final_msg)
 
         st.subheader("Top recommendations")
         if not candidates:
-            st.warning("Agent did not return any scored candidates. Try widening your profile.")
+            st.warning("No matches found. Try widening your profile.")
         else:
-            ranked = rank(candidates, profile, stats)[:5]
+            ranked = candidates[:5]
             for i, c in enumerate(ranked, 1):
                 with st.container(border=True):
                     result_header(i, c["artist"], c["title"], c["score"])
